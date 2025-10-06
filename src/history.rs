@@ -143,11 +143,10 @@ impl ThreadData<'_> {
         let height = self.board.height();
 
         // wow! floating point in a chess engine!
-        let tt_complexity_factor =
-            ((1.0 + (tt_complexity as f32 + 1.0).log2() / 10.0) * 8.0) as i32;
+        let tt_complexity_factor = (1.0 + (tt_complexity as f32 + 1.0).log2() / 10.0) * 8.0;
 
         let bonus = i32::clamp(
-            diff * depth * tt_complexity_factor / 64,
+            (diff as f32 * depth as f32 * tt_complexity_factor / 64.0) as i32,
             -CORRECTION_HISTORY_MAX / 4,
             CORRECTION_HISTORY_MAX / 4,
         );
