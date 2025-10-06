@@ -139,8 +139,8 @@ impl ThreadData<'_> {
 
         use Colour::{Black, White};
 
-        const MAX_MULTIPLIER: f32 = 2.5;
-        const SCALE: f32 = 0.008;
+        const MAX_MULTIPLIER: f32 = 2.0;
+        const SCALE: f32 = 0.005;
 
         let us = self.board.turn();
         let height = self.board.height();
