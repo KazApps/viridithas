@@ -139,15 +139,18 @@ impl ThreadData<'_> {
 
         use Colour::{Black, White};
 
+        const MAX_MULTIPLIER: f32 = 2.5;
+        const SCALE: f32 = 0.008;
+
         let us = self.board.turn();
         let height = self.board.height();
 
         // wow! floating point in a chess engine!
         let tt_complexity_factor =
-            ((1.0 + (tt_complexity as f32 + 1.0).log2() / 10.0) * 8.0) as i32;
+            1.0 + (MAX_MULTIPLIER - 1.0) * (1.0 - (-tt_complexity as f32 * SCALE).exp());
 
         let bonus = i32::clamp(
-            diff * depth * tt_complexity_factor / 64,
+            (diff as f32 * depth as f32 * tt_complexity_factor / 64.0) as i32,
             -CORRECTION_HISTORY_MAX / 4,
             CORRECTION_HISTORY_MAX / 4,
         );
